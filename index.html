@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al-Mudarris vol.3</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f2f5;
+        }
+        .header {
+            background: linear-gradient(45deg, #2196F3, #00BCD4);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .image-preview {
+            max-width: 200px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Al-Mudarris vol.3</h1>
+        <h2>Aplikasi Rencana Pelaksanaan Pembelajaran</h2>
+    </div>
+
+    <div class="container">
+        <div class="form-group">
+            <label>Nama Guru:</label>
+            <input type="text" id="namaGuru">
+        </div>
+
+        <div class="form-group">
+            <label>Tanggal Mengajar:</label>
+            <input type="date" id="tanggalMengajar">
+        </div>
+
+        <div class="form-group">
+            <label>Mata Pelajaran:</label>
+            <input type="text" id="mapel">
+        </div>
+
+        <div class="form-group">
+            <label>Kelas:</label>
+            <select id="kelas">
+                <option value="5Ba">5Ba</option>
+                <option value="5Ca">5Ca</option>
+                <option value="6Ba">6Ba</option>
+                <option value="6Ca">6Ca</option>
+                <option value="6Bi">6Bi</option>
+                <option value="6Ci">6Ci</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Tujuan Pembelajaran:</label>
+            <textarea id="tujuanPembelajaran" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Materi:</label>
+            <textarea id="materi" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Kegiatan Pembelajaran:</label>
+            <textarea id="kegiatanPembelajaran" rows="4"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Gambar:</label>
+            <button onclick="document.getElementById('fileInput').click()">Input Gambar</button>
+            <button onclick="bukaKamera()">Buka Kamera</button>
+            <input type="file" id="fileInput" accept="image/*" style="display: none" onchange="previewImage(this)">
+            <video id="camera" style="display: none" width="320" height="240"></video>
+            <canvas id="canvas" style="display: none"></canvas>
+            <img id="imagePreview" class="image-preview">
+        </div>
+
+        <div class="form-group">
+            <label>Soal Evaluasi:</label>
+            <div id="soalContainer">
+                <div class="soal-item">
+                    <textarea placeholder="Soal" class="soal"></textarea>
+                    <textarea placeholder="Jawaban" class="jawaban"></textarea>
+                    <input type="number" placeholder="Bobot Nilai" class="bobot">
+                </div>
+            </div>
+            <button onclick="tambahSoal()">Tambah Soal</button>
+        </div>
+
+        <div class="form-group">
+            <label>Data Peserta Didik:</label>
+            <input type="file" id="csvFile" accept=".csv">
+            <button onclick="tambahPesertaDidik()">Tambah Peserta Didik</button>
+        </div>
+
+        <table id="nilaiTable">
+            <thead>
+                <tr>
+                    <th>Nama Peserta Didik</th>
+                    <th>Nilai</th>
+                </tr>
+            </thead>
+            <tbody id="nilaiTableBody"></tbody>
+        </table>
+
+        <div style="margin-top: 20px;">
+            <button onclick="generateRPPPDF()">File PDF RPP</button>
+            <button onclick="generateNilaiPDF()">PDF Nilai Harian</button>
+            <button onclick="generateSertifikat()">Sertifikat</button>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi untuk kamera
+        async function bukaKamera() {
+            const video = document.getElementById('camera');
+            const canvas = document.getElementById('canvas');
+            const imagePreview = document.getElementById('imagePreview');
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+                video.style.display = 'block';
+                video.play();
+
+                // Tambah tombol ambil foto
+                const captureBtn = document.createElement('button');
+                captureBtn.textContent = 'Ambil Foto';
+                captureBtn.onclick = () => {
+                    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+                    imagePreview.src = canvas.toDataURL('image/png');
+                    video.style.display = 'none';
+                    stream.getTracks().forEach(track => track.stop());
+                    captureBtn.remove();
+                };
+                video.parentElement.appendChild(captureBtn);
+            } catch (err) {
+                console.error('Error:', err);
+                alert('Tidak dapat mengakses kamera');
+            }
+        }
+
+        // Preview gambar
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Tambah soal
+        function tambahSoal() {
+            const container = document.getElementById('soalContainer');
+            const div = document.createElement('div');
+            div.className = 'soal-item';
+            div.innerHTML = `
+                <textarea placeholder="Soal" class="soal"></textarea>
+                <textarea placeholder="Jawaban" class="jawaban"></textarea>
+                <input type="number" placeholder="Bobot Nilai" class="bobot">
+            `;
+            container.appendChild(div);
+        }
+
+        // Tambah peserta didik
+        function tambahPesertaDidik() {
+            const tbody = document.getElementById('nilaiTableBody');
+            const row = tbody.insertRow();
+            const cell1 = row.insertCell(0);
+            const cell2 = row.insertCell(1);
+            
+            cell1.innerHTML = '<input type="text" placeholder="Nama Peserta Didik">';
+            cell2.innerHTML = '<input type="number" placeholder="Nilai">';
+        }
+
+        // Generate PDF RPP
+        function generateRPPPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Tambahkan konten RPP
+            doc.setFontSize(16);
+            doc.text('RENCANA PELAKSANAAN PEMBELAJARAN', 105, 20, { align: 'center' });
+            
+            doc.setFontSize(12);
+            doc.text(`Nama Guru: ${document.getElementById('namaGuru').value}`, 20, 40);
+            doc.text(`Tanggal: ${document.getElementById('tanggalMengajar').value}`, 20, 50);
+            doc.text(`Mata Pelajaran: ${document.getElementById('mapel').value}`, 20, 60);
+            doc.text(`Kelas: ${document.getElementById('kelas').value}`, 20, 70);
+
+    // Tujuan Pembelajaran
+    doc.setFontSize(14);
+    doc.text('Tujuan Pembelajaran:', 20, 90);
+    doc.setFontSize(12);
+    const tujuanPembelajaran = document.getElementById('tujuanPembelajaran').value;
+    doc.text(tujuanPembelajaran, 20, 100, { maxWidth: 170 });
+
+    // Materi
+    doc.setFontSize(14);
+    doc.text('Materi:', 20, 130);
+    doc.setFontSize(12);
+    const materi = document.getElementById('materi').value;
+    doc.text(materi, 20, 140, { maxWidth: 170 });
+
+    // Kegiatan Pembelajaran
+    doc.setFontSize(14);
+    doc.text('Kegiatan Pembelajaran:', 20, 170);
+    doc.setFontSize(12);
+    const kegiatanPembelajaran = document.getElementById('kegiatanPembelajaran').value;
+    doc.text(kegiatanPembelajaran, 20, 180, { maxWidth: 170 });
+            
+            // Tambahkan gambar jika ada
+            const img = document.getElementById('imagePreview');
+            if (img.src) {
+                doc.addImage(img.src, 'JPEG', 20, 80, 50, 50);
+            }
+
+    // Soal Evaluasi dan Jawaban
+    doc.setFontSize(14);
+    doc.text('Soal Evaluasi dan Jawaban:', 20, 210);
+    doc.setFontSize(12);
+
+    const soalContainer = document.getElementById('soalContainer');
+    const soalItems = soalContainer.querySelectorAll('.soal-item');
+    let y = 220; // Posisi awal untuk soal
+
+    soalItems.forEach((soalItem, index) => {
+        const soal = soalItem.querySelector('.soal').value;
+        const jawaban = soalItem.querySelector('.jawaban').value;
+        const bobot = soalItem.querySelector('.bobot').value;
+
+        doc.text(`Soal ${index + 1}: ${soal}`, 20, y, { maxWidth: 170 });
+        y += 10;
+        doc.text(`Jawaban: ${jawaban}`, 20, y, { maxWidth: 170 });
+        y += 10;
+        doc.text(`Bobot Nilai: ${bobot}`, 20, y, { maxWidth: 170 });
+        y += 15;
+
+        // Jika konten melebihi batas halaman, tambahkan halaman baru
+        if (y > 280) {
+            doc.addPage();
+            y = 20; // Reset posisi y untuk halaman baru
+        }
+    });
+
+    // Simpan PDF
+    doc.save('RPP.pdf');
+}
+
+        // Generate PDF Nilai
+function generateNilaiPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF('p', 'mm', 'a4'); // Format A4
+
+    // Header PDF Nilai Harian
+    doc.setFontSize(16);
+    doc.text('DAFTAR NILAI HARIAN', 105, 20, { align: 'center' });
+
+    // Informasi Dasar
+    doc.setFontSize(12);
+    doc.text(`Nama Guru: ${document.getElementById('namaGuru').value}`, 20, 40);
+    doc.text(`Tanggal: ${document.getElementById('tanggalMengajar').value}`, 20, 50);
+    doc.text(`Mata Pelajaran: ${document.getElementById('mapel').value}`, 20, 60);
+    doc.text(`Kelas: ${document.getElementById('kelas').value}`, 20, 70);
+
+    // Tabel Nilai
+    doc.setFontSize(14);
+    doc.text('Daftar Nilai Peserta Didik:', 20, 90);
+    doc.setFontSize(12);
+
+    const tbody = document.getElementById('nilaiTableBody');
+    let y = 100; // Posisi awal untuk tabel nilai
+    let totalNilai = 0; // Untuk menghitung total nilai
+    let jumlahPeserta = 0; // Untuk menghitung jumlah peserta
+
+    // Loop melalui setiap baris tabel nilai
+    for (let i = 0; i < tbody.rows.length; i++) {
+        const nama = tbody.rows[i].cells[0].querySelector('input').value;
+        const nilai = parseFloat(tbody.rows[i].cells[1].querySelector('input').value);
+
+        // Tambahkan nama dan nilai ke PDF
+        doc.text(`${nama}: ${nilai}`, 20, y);
+        y += 10;
+
+        // Hitung total nilai dan jumlah peserta
+        if (!isNaN(nilai)) {
+            totalNilai += nilai;
+            jumlahPeserta++;
+        }
+
+        // Jika konten melebihi batas halaman, tambahkan halaman baru
+        if (y > 280) {
+            doc.addPage();
+            y = 20; // Reset posisi y untuk halaman baru
+        }
+    }
+
+    // Hitung rata-rata nilai
+    const rataRata = jumlahPeserta > 0 ? (totalNilai / jumlahPeserta).toFixed(2) : 0;
+
+    // Tambahkan rata-rata nilai ke PDF
+    doc.setFontSize(14);
+    doc.text(`Rata-rata Nilai: ${rataRata}`, 20, y + 10);
+
+    // Simpan PDF
+    doc.save('nilai-harian.pdf');
+}
+        // Generate Sertifikat
+        function generateSertifikat() {
+            const { jsPDF } = window.jspdf;
+            
+            // Dapatkan nilai tertinggi dan terendah
+            const nilai = Array.from(document.getElementById('nilaiTableBody').rows)
+                .map(row => ({
+                    nama: row.cells[0].querySelector('input').value,
+                    nilai: parseInt(row.cells[1].querySelector('input').value)
+                }))
+                .sort((a, b) => b.nilai - a.nilai);
+
+            // Generate sertifikat untuk nilai tertinggi
+            const docTertinggi = new jsPDF();
+            docTertinggi.setFontSize(24);
+            docTertinggi.text('SERTIFIKAT PENGHARGAAN', 105, 50, { align: 'center' });
+            docTertinggi.setFontSize(16);
+            docTertinggi.text(`Diberikan kepada:`, 105, 70, { align: 'center' });
+            docTertinggi.text(`${nilai[0].nama}`, 105, 80, { align: 'center' });
+            docTertinggi.text(`Nilai: ${nilai[0].nilai}`, 105, 90, { align: 'center' });
+            docTertinggi.text('Selamat atas prestasi cemerlang!', 105, 110, { align: 'center' });
+            docTertinggi.save('sertifikat-tertinggi.pdf');
+
+            // Generate sertifikat untuk 2 nilai terendah
+            nilai.slice(-2).forEach((siswa, index) => {
+                const docTerendah = new jsPDF();
+                docTerendah.setFontSize(24);
+                docTerendah.text('SERTIFIKAT SEMANGAT', 105, 50, { align: 'center' });
+                docTerendah.setFontSize(16);
+                docTerendah.text(`Diberikan kepada:`, 105, 70, { align: 'center' });
+                docTerendah.text(`${siswa.nama}`, 105, 80, { align: 'center' });
+                docTerendah.text(`Nilai: ${siswa.nilai}`, 105, 90, { align: 'center' });
+                docTerendah.text('Terus semangat dan tingkatkan prestasimu!', 105, 110, { align: 'center' });
+                docTerendah.save(`sertifikat-semangat-${index + 1}.pdf`);
+            });
+        }
+
+        // CSV File Handler
+        document.getElementById('csvFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(event) {
+                const csv = event.target.result;
+                const rows = csv.split('\n');
+                const tbody = document.getElementById('nilaiTableBody');
+                tbody.innerHTML = '';
+                
+                rows.forEach(row => {
+                    if (row.trim()) {
+                        const tr = tbody.insertRow();
+                        const cell1 = tr.insertCell(0);
+                        const cell2 = tr.insertCell(1);
+                        
+                        cell1.innerHTML = `<input type="text" value="${row.trim()}" readonly>`;
+                        cell2.innerHTML = '<input type="number" placeholder="Nilai">';
+                    }
+                });
+            };
+            
+            reader.readAsText(file);
+        });
+    </script>
+</body>
+</html>
