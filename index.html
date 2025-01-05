@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Al-Mudarris vol.3</title>
+    <title>Al-Mudarris</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
@@ -70,12 +70,79 @@
             max-width: 200px;
             margin-top: 10px;
         }
+
+        /* Dropdown Button */
+.dropbtn {
+    background-color: transparent;
+    color: white;
+    padding: 10px;
+    font-size: 24px;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Al-Mudarris vol.3</h1>
-        <h2>Aplikasi Rencana Pelaksanaan Pembelajaran</h2>
+    <div class="header".header {
+    background: linear-gradient(45deg, #2196F3, #00BCD4);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    position: relative; /* Tambahkan ini */
+}>
+
+        <div class="dropdown">
+    <button class="dropbtn">☰</button>
+    <div class="dropdown-content">
+        <a href="https://i.postimg.cc/DfQWb7yk/Whats-App-Image-2025-01-05-at-16-36-57.jpg" target="_blank">Jadwalku</a>
+        <a href="https://docs.google.com/forms/d/15f4lHbIGuvxvX-1dpzKTgO9m3ZpnV-48qaS4NqnJIxc/edit#responses" target="_blank">PSB25</a>
+        <a href="https://miftahadm.github.io/ruangAdministrasi/" target="_blank">Ruang ADM</a>
+    </div>
+</div>
+
+        <h1>Al-Mudarris</h1>
+        <h2>Aplikasi 3.0 Rencana Pelaksanaan Pembelajaran</h2>
     </div>
 
     <div class="container">
