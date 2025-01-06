@@ -138,6 +138,7 @@
         <a href="https://i.postimg.cc/DfQWb7yk/Whats-App-Image-2025-01-05-at-16-36-57.jpg" target="_blank">Jadwalku</a>
         <a href="https://docs.google.com/forms/d/15f4lHbIGuvxvX-1dpzKTgO9m3ZpnV-48qaS4NqnJIxc/edit#responses" target="_blank">PSB25</a>
         <a href="https://miftahadm.github.io/ruangAdministrasi/" target="_blank">Ruang ADM</a>
+        <a href="https://postimg.cc/gallery/3HnHGdk" target="_blank">KBM</a>
     </div>
 </div>
 
@@ -185,7 +186,7 @@
 
         <div class="form-group">
             <label>Kegiatan Pembelajaran:</label>
-            <textarea id="kegiatanPembelajaran" rows="4"></textarea>
+            <textarea id="kegiatanPembelajaran" rows="54"></textarea>
         </div>
 
         <div class="form-group">
@@ -193,7 +194,7 @@
             <button onclick="document.getElementById('fileInput').click()">Input Gambar</button>
             <button onclick="bukaKamera()">Buka Kamera</button>
             <input type="file" id="fileInput" accept="image/*" style="display: none" onchange="previewImage(this)">
-            <video id="camera" style="display: none" width="320" height="240"></video>
+            <video id="camera" style="display: none" width="640" height="480"></video>
             <canvas id="canvas" style="display: none"></canvas>
             <img id="imagePreview" class="image-preview">
         </div>
@@ -337,7 +338,7 @@
             // Tambahkan gambar jika ada
             const img = document.getElementById('imagePreview');
             if (img.src) {
-                doc.addImage(img.src, 'JPEG', 20, 80, 50, 50);
+                doc.addImage(img.src, 'JPEG', 40, 160, 100, 100);
             }
 
     // Soal Evaluasi dan Jawaban
