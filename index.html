@@ -328,17 +328,28 @@
     const materi = document.getElementById('materi').value;
     doc.text(materi, 20, 140, { maxWidth: 170 });
 
-    // Kegiatan Pembelajaran
-    doc.setFontSize(14);
-    doc.text('Kegiatan Pembelajaran:', 20, 170);
-    doc.setFontSize(12);
-    const kegiatanPembelajaran = document.getElementById('kegiatanPembelajaran').value;
-    doc.text(kegiatanPembelajaran, 20, 180, { maxWidth: 170 });
-            
+// Kegiatan Pembelajaran
+doc.setFontSize(14);
+doc.text('Kegiatan Pembelajaran:', 20, y); // Judul kegiatan pembelajaran
+y += 10; // Jarak antara judul dan konten
+
+// Split teks kegiatan pembelajaran ke dalam array baris
+const kegiatanPembelajaran = document.getElementById('kegiatanPembelajaran').value;
+const kegiatanPembelajaranLines = doc.splitTextToSize(kegiatanPembelajaran, 170);
+
+// Loop untuk menulis setiap baris
+kegiatanPembelajaranLines.forEach(line => {
+    if (y > 280) { // Jika posisi y melebihi batas halaman
+        doc.addPage(); // Tambahkan halaman baru
+        y = 20; // Reset posisi y ke atas halaman baru
+    }
+    doc.text(line, 20, y); // Tulis baris teks
+    y += 10; // Jarak antar baris
+});
             // Tambahkan gambar jika ada
             const img = document.getElementById('imagePreview');
             if (img.src) {
-                doc.addImage(img.src, 'JPEG', 40, 160, 100, 100);
+                doc.addImage(img.src, 'JPEG', 40, 160, 300, 300);
             }
 
     // Soal Evaluasi dan Jawaban
@@ -496,3 +507,4 @@ function generateNilaiPDF() {
     </script>
 </body>
 </html>
+
