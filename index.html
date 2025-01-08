@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Al-Mudarris</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <title>EvalBest</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
             background-color: #f0f2f5;
         }
         .header {
@@ -51,7 +53,7 @@
             margin: 5px;
         }
         button:hover {
-            background-color: #45a049;
+            background-color: #29e8d8;
         }
         table {
             width: 100%;
@@ -118,9 +120,125 @@
 .dropdown:hover .dropbtn {
     background-color: rgba(255, 255, 255, 0.1);
 }
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --background-color: #f3f4f6;
+            --text-color: #1f2937;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #cbd5e1;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .image-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .image-preview img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        #camera-container {
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        #camera-container video {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .required {
+            color: #dc2626;
+            margin-left: 0.25rem;
+        }
 
     </style>
-</head>
 <body>
     <div class="header".header {
     background: linear-gradient(45deg, #2196F3, #00BCD4);
@@ -132,19 +250,21 @@
     position: relative; /* Tambahkan ini */
 }>
 
-        <div class="dropdown">
-    <button class="dropbtn">☰</button>
-    <div class="dropdown-content">
-        <a href="https://i.postimg.cc/DfQWb7yk/Whats-App-Image-2025-01-05-at-16-36-57.jpg" target="_blank">Jadwalku</a>
-        <a href="https://docs.google.com/forms/d/15f4lHbIGuvxvX-1dpzKTgO9m3ZpnV-48qaS4NqnJIxc/edit#responses" target="_blank">PSB25</a>
-        <a href="https://miftahadm.github.io/ruangAdministrasi/" target="_blank">Ruang ADM</a>
-        <a href="https://postimg.cc/gallery/3HnHGdk" target="_blank">KBM</a>
+
+        <h1>EvalBest</h1>
+        <h2>Evaluasi Belajar Santri</h2>
+    </div>
+    <!-- Dropdown Menu -->
+    <div class="dropdown">
+        <button class="dropbtn">☰</button>
+        <div class="dropdown-content">
+            <a href="https://i.postimg.cc/DfQWb7yk/Whats-App-Image-2025-01-05-at-16-36-57.jpg" target="_blank">Jadwalku</a>
+            <a href="https://docs.google.com/forms/d/15f4lHbIGuvxvX-1dpzKTgO9m3ZpnV-48qaS4NqnJIxc/edit#responses" target="_blank">PSB25</a>
+            <a href="https://miftahadm.github.io/ruangAdministrasi/" target="_blank">Ruang ADM</a>
+            <a href="https://postimg.cc/gallery/3HnHGdk" target="_blank">KBM</a>
+        </div>
     </div>
 </div>
-
-        <h1>Al-Mudarris</h1>
-        <h2>Aplikasi 3.0 Rencana Pelaksanaan Pembelajaran</h2>
-    </div>
 
     <div class="container">
         <div class="form-group">
@@ -165,6 +285,7 @@
         <div class="form-group">
             <label>Kelas:</label>
             <select id="kelas">
+                <option value="5Bi">5Bi</option>
                 <option value="5Ba">5Ba</option>
                 <option value="5Ca">5Ca</option>
                 <option value="6Ba">6Ba</option>
@@ -179,36 +300,14 @@
             <textarea id="tujuanPembelajaran" rows="4"></textarea>
         </div>
 
-        <div class="form-group">
-            <label>Materi:</label>
-            <textarea id="materi" rows="4"></textarea>
-        </div>
 
         <div class="form-group">
-            <label>Kegiatan Pembelajaran:</label>
-            <textarea id="kegiatanPembelajaran" rows="54"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label>Gambar:</label>
-            <button onclick="document.getElementById('fileInput').click()">Input Gambar</button>
-            <button onclick="bukaKamera()">Buka Kamera</button>
-            <input type="file" id="fileInput" accept="image/*" style="display: none" onchange="previewImage(this)">
-            <video id="camera" style="display: none" width="640" height="480"></video>
-            <canvas id="canvas" style="display: none"></canvas>
-            <img id="imagePreview" class="image-preview">
-        </div>
-
-        <div class="form-group">
-            <label>Soal Evaluasi:</label>
-            <div id="soalContainer">
-                <div class="soal-item">
-                    <textarea placeholder="Soal" class="soal"></textarea>
-                    <textarea placeholder="Jawaban" class="jawaban"></textarea>
-                    <input type="number" placeholder="Bobot Nilai" class="bobot">
-                </div>
-            </div>
-            <button onclick="tambahSoal()">Tambah Soal</button>
+            <label>Gambar</label>
+            <input type="file" id="imageInput" accept="image/*" multiple style="display: none">
+            <button class="btn" onclick="document.getElementById('imageInput').click()">Input Gambar</button>
+            <button class="btn" onclick="openCamera()">Buka Kamera</button>
+            <div id="imagePreview" class="image-preview"></div>
+            <div id="camera-container"></div>
         </div>
 
         <div class="form-group">
@@ -218,74 +317,146 @@
         </div>
 
         <table id="nilaiTable">
-            <thead>
                 <tr>
                     <th>Nama Peserta Didik</th>
                     <th>Nilai</th>
                 </tr>
-            </thead>
             <tbody id="nilaiTableBody"></tbody>
         </table>
 
         <div style="margin-top: 20px;">
-            <button onclick="generateRPPPDF()">File PDF RPP</button>
+            <button onclick="generatePDF()">Generate PDF</button>
             <button onclick="generateNilaiPDF()">PDF Nilai Harian</button>
             <button onclick="generateSertifikat()">Sertifikat</button>
         </div>
     </div>
 
+    <style>
+    </style>
+
     <script>
-        // Fungsi untuk kamera
-        async function bukaKamera() {
-            const video = document.getElementById('camera');
-            const canvas = document.getElementById('canvas');
-            const imagePreview = document.getElementById('imagePreview');
+        // Variabel global untuk menyimpan gambar
+        let images = [];
+        let videoStream = null;
 
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                video.srcObject = stream;
-                video.style.display = 'block';
-                video.play();
+        // Event listener untuk input gambar
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            const files = e.target.files;
+            handleImageFiles(files);
+        });
 
-                // Tambah tombol ambil foto
-                const captureBtn = document.createElement('button');
-                captureBtn.textContent = 'Ambil Foto';
-                captureBtn.onclick = () => {
-                    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-                    imagePreview.src = canvas.toDataURL('image/png');
-                    video.style.display = 'none';
-                    stream.getTracks().forEach(track => track.stop());
-                    captureBtn.remove();
-                };
-                video.parentElement.appendChild(captureBtn);
-            } catch (err) {
-                console.error('Error:', err);
-                alert('Tidak dapat mengakses kamera');
-            }
-        }
-
-        // Preview gambar
-        function previewImage(input) {
-            if (input.files && input.files[0]) {
+        // Fungsi untuk menangani file gambar
+        function handleImageFiles(files) {
+            for (let file of files) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    document.getElementById('imagePreview').src = e.target.result;
+                    images.push(e.target.result);
+                    updateImagePreview();
                 };
-                reader.readAsDataURL(input.files[0]);
+                reader.readAsDataURL(file);
             }
         }
 
-        // Tambah soal
-        function tambahSoal() {
-            const container = document.getElementById('soalContainer');
-            const div = document.createElement('div');
-            div.className = 'soal-item';
-            div.innerHTML = `
-                <textarea placeholder="Soal" class="soal"></textarea>
-                <textarea placeholder="Jawaban" class="jawaban"></textarea>
-                <input type="number" placeholder="Bobot Nilai" class="bobot">
-            `;
-            container.appendChild(div);
+        // Fungsi untuk membuka kamera
+        function openCamera() {
+            const container = document.getElementById('camera-container');
+            
+            // Bersihkan container kamera jika sudah ada
+            container.innerHTML = '';
+            
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+            }
+
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    videoStream = stream;
+                    const video = document.createElement('video');
+                    video.srcObject = stream;
+                    video.autoplay = true;
+                    
+                    const captureBtn = document.createElement('button');
+                    captureBtn.textContent = 'Ambil Foto';
+                    captureBtn.className = 'btn';
+                    
+                    container.appendChild(video);
+                    container.appendChild(captureBtn);
+                    
+                    captureBtn.onclick = function() {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        canvas.getContext('2d').drawImage(video, 0, 0);
+                        images.push(canvas.toDataURL('image/jpeg'));
+                        updateImagePreview();
+                        
+                        // Hentikan stream kamera
+                        videoStream.getTracks().forEach(track => track.stop());
+                        container.innerHTML = '';
+                    };
+                })
+                .catch(function(err) {
+                    alert('Error mengakses kamera: ' + err.message);
+                });
+        }
+
+        // Fungsi untuk memperbarui preview gambar
+        function updateImagePreview() {
+            const preview = document.getElementById('imagePreview');
+            preview.innerHTML = '';
+            images.forEach((image, index) => {
+                const img = document.createElement('img');
+                img.src = image;
+                preview.appendChild(img);
+            });
+        }
+
+        // Fungsi untuk menghasilkan PDF
+        function generatePDF() {
+            const namaGuru = document.getElementById('namaGuru').value;
+            const tanggalMengajar = document.getElementById('tanggalMengajar').value;
+            const mapel = document.getElementById('mapel').value;
+            const kelas = document.getElementById('kelas').value;
+
+            // Validasi input
+            if (!namaGuru || !tanggalMengajar || !mapel || !kelas) {
+                alert('Mohon lengkapi semua field yang wajib diisi!');
+                return;
+            }
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Header
+            doc.setFontSize(16);
+            doc.text('RENCANA PELAKSANAAN PEMBELAJARAN', 105, 20, { align: 'center' });
+
+            // Informasi RPP
+            doc.setFontSize(12);
+            const info = [
+                `Nama Guru: ${namaGuru}`,
+                `Tanggal Mengajar: ${tanggalMengajar}`,
+                `Mata Pelajaran: ${mapel}`,
+                `Kelas: ${kelas}`
+            ];
+
+            info.forEach((text, index) => {
+                doc.text(text, 20, 40 + (index * 10));
+            });
+
+            // Tambahkan gambar jika ada
+            let yPos = 80;
+            images.forEach((image, index) => {
+                if (yPos > 250) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+                doc.addImage(image, 'JPEG', 20, yPos, 170, 80);
+                yPos += 90;
+            });
+
+            // Simpan PDF
+            doc.save('rpp.pdf');
         }
 
         // Tambah peserta didik
@@ -298,91 +469,6 @@
             cell1.innerHTML = '<input type="text" placeholder="Nama Peserta Didik">';
             cell2.innerHTML = '<input type="number" placeholder="Nilai">';
         }
-
-        // Generate PDF RPP
-        function generateRPPPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            
-            // Tambahkan konten RPP
-            doc.setFontSize(16);
-            doc.text('RENCANA PELAKSANAAN PEMBELAJARAN', 105, 20, { align: 'center' });
-            
-            doc.setFontSize(12);
-            doc.text(`Nama Guru: ${document.getElementById('namaGuru').value}`, 20, 40);
-            doc.text(`Tanggal: ${document.getElementById('tanggalMengajar').value}`, 20, 50);
-            doc.text(`Mata Pelajaran: ${document.getElementById('mapel').value}`, 20, 60);
-            doc.text(`Kelas: ${document.getElementById('kelas').value}`, 20, 70);
-
-    // Tujuan Pembelajaran
-    doc.setFontSize(14);
-    doc.text('Tujuan Pembelajaran:', 20, 90);
-    doc.setFontSize(12);
-    const tujuanPembelajaran = document.getElementById('tujuanPembelajaran').value;
-    doc.text(tujuanPembelajaran, 20, 100, { maxWidth: 170 });
-
-    // Materi
-    doc.setFontSize(14);
-    doc.text('Materi:', 20, 130);
-    doc.setFontSize(12);
-    const materi = document.getElementById('materi').value;
-    doc.text(materi, 20, 140, { maxWidth: 170 });
-
-// Kegiatan Pembelajaran
-doc.setFontSize(14);
-doc.text('Kegiatan Pembelajaran:', 20, y); // Judul kegiatan pembelajaran
-y += 10; // Jarak antara judul dan konten
-
-// Split teks kegiatan pembelajaran ke dalam array baris
-const kegiatanPembelajaran = document.getElementById('kegiatanPembelajaran').value;
-const kegiatanPembelajaranLines = doc.splitTextToSize(kegiatanPembelajaran, 170);
-
-// Loop untuk menulis setiap baris
-kegiatanPembelajaranLines.forEach(line => {
-    if (y > 280) { // Jika posisi y melebihi batas halaman
-        doc.addPage(); // Tambahkan halaman baru
-        y = 20; // Reset posisi y ke atas halaman baru
-    }
-    doc.text(line, 20, y); // Tulis baris teks
-    y += 10; // Jarak antar baris
-});
-            // Tambahkan gambar jika ada
-            const img = document.getElementById('imagePreview');
-            if (img.src) {
-                doc.addImage(img.src, 'JPEG', 40, 160, 300, 300);
-            }
-
-    // Soal Evaluasi dan Jawaban
-    doc.setFontSize(14);
-    doc.text('Soal Evaluasi dan Jawaban:', 20, 210);
-    doc.setFontSize(12);
-
-    const soalContainer = document.getElementById('soalContainer');
-    const soalItems = soalContainer.querySelectorAll('.soal-item');
-    let y = 220; // Posisi awal untuk soal
-
-    soalItems.forEach((soalItem, index) => {
-        const soal = soalItem.querySelector('.soal').value;
-        const jawaban = soalItem.querySelector('.jawaban').value;
-        const bobot = soalItem.querySelector('.bobot').value;
-
-        doc.text(`Soal ${index + 1}: ${soal}`, 20, y, { maxWidth: 170 });
-        y += 10;
-        doc.text(`Jawaban: ${jawaban}`, 20, y, { maxWidth: 170 });
-        y += 10;
-        doc.text(`Bobot Nilai: ${bobot}`, 20, y, { maxWidth: 170 });
-        y += 15;
-
-        // Jika konten melebihi batas halaman, tambahkan halaman baru
-        if (y > 280) {
-            doc.addPage();
-            y = 20; // Reset posisi y untuk halaman baru
-        }
-    });
-
-    // Simpan PDF
-    doc.save('RPP.pdf');
-}
 
         // Generate PDF Nilai
 function generateNilaiPDF() {
@@ -506,5 +592,5 @@ function generateNilaiPDF() {
         });
     </script>
 </body>
+</head>
 </html>
-
